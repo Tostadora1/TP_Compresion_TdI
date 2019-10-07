@@ -19,8 +19,8 @@ public class TableGenerator
     public TableGenerator(String filename)
         throws FileNotFoundException
     {
-        super();        
-        this.generator(filename);        
+        super();
+        this.generator(filename);
     }
 
     protected void generator(String filename)
@@ -28,23 +28,23 @@ public class TableGenerator
     {
         int total = 0;
         try
-        {           
-            BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(filename), "utf-8"));                       
+        {
+            BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(filename), "utf-8"));
             int control = in.read();
             char current = (char) control;
             while (control != -1)
             {
-                    total++;
-                    System.out.println(""+current);
-                    System.out.println(total);
-                    if (table.containsKey(current))
-                        table.put(current, table.get(current) + 1.0);
-                    else
-                        table.put(current, 1.0); 
-                    control = in.read();
-                    current = (char) control;
-             }
-        }  
+                total++;
+                System.out.println("" + current);
+                System.out.println(total);
+                if (table.containsKey(current))
+                    table.put(current, table.get(current) + 1.0);
+                else
+                    table.put(current, 1.0);
+                control = in.read();
+                current = (char) control;
+            }
+        }
         catch (IOException e)
         {
             System.out.println("No se encontro el archivo");
@@ -60,16 +60,17 @@ public class TableGenerator
     {
         return table;
     }
-    
-    public TreeSet<Simbolo> getTreeSet(){
-        TreeSet<Simbolo> t = new TreeSet<Simbolo>();
-        
+
+    public TreeSet<Simbolo> getTreeSet()
+    {
+        TreeSet<Simbolo> tree = new TreeSet<Simbolo>();
+
         for (Map.Entry<Character, Double> entry: table.entrySet())
         {
-            t.add(new Simbolo(""+entry.getKey(), entry.getValue()));
+            tree.add(new Simbolo("" + entry.getKey(), entry.getValue()));
         }
-        
-        return t;
+
+        return tree;
     }
 }
 

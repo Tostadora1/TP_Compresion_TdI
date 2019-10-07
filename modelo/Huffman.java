@@ -12,6 +12,7 @@ public class Huffman
 {
     private HashMap<Character, String> encodeTable = new HashMap<Character, String>();
     private HashMap<String, Character> decodeTable = new HashMap<String, Character>();
+    
 
     public Huffman()
     {

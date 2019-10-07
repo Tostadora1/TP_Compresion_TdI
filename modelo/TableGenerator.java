@@ -14,13 +14,15 @@ import java.util.Map;
 public class TableGenerator
 {
     private HashMap<Character, Double> table = new HashMap<Character, Double>();
-    
-    public TableGenerator()
+
+    public TableGenerator(String filename)
+        throws FileNotFoundException
     {
-        super();
+        super();        
+        this.generator(filename);        
     }
 
-    public void generator(String filename)
+    protected void generator(String filename)
         throws FileNotFoundException
     {
         int total = 0;
@@ -51,7 +53,11 @@ public class TableGenerator
             this.table.put(entry.getKey(), entry.getValue() / total);
         }
 
+    }
 
+    public HashMap<Character, Double> getTable()
+    {
+        return table;
     }
 }
 

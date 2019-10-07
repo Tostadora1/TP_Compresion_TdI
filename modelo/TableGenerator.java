@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeSet;
 
 
 public class TableGenerator
@@ -58,6 +59,17 @@ public class TableGenerator
     public HashMap<Character, Double> getTable()
     {
         return table;
+    }
+    
+    public TreeSet<Simbolo> getTreeSet(){
+        TreeSet<Simbolo> t = new TreeSet<Simbolo>();
+        
+        for (Map.Entry<Character, Double> entry: table.entrySet())
+        {
+            t.add(new Simbolo(""+entry.getKey(), entry.getValue()));
+        }
+        
+        return t;
     }
 }
 

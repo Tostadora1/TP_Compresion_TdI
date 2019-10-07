@@ -35,8 +35,8 @@ public class TableGenerator
             while (control != -1)
             {
                 total++;
-                System.out.println("" + current);
-                System.out.println(total);
+                //System.out.println("" + current);
+                //System.out.println(total);
                 if (table.containsKey(current))
                     table.put(current, table.get(current) + 1.0);
                 else

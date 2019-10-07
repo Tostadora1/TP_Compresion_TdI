@@ -7,12 +7,36 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.TreeSet;
 
 public class Huffman
 {
     private HashMap<Character, String> encodeTable = new HashMap<Character, String>();
     private HashMap<String, Character> decodeTable = new HashMap<String, Character>();
-    
+
+
+    /**Este  metodo genera el codigo de huffman para un arbol jeje
+     * @param t
+     */
+    public static void huffman(TreeSet<Simbolo> t){
+        if(t.size() ==2 ||t.size()==1){//feito TODO
+            t.first().setCodigo("0");
+            t.last().setCodigo("1");
+        }
+        else{
+            Simbolo s1 = t.pollLast();
+            Simbolo s2 = t.pollLast();
+            Simbolo sc = new Simbolo(s1.getNombre()+s2.getNombre(),s1.getProbabilidad()+s2.getProbabilidad());
+            t.add(sc);
+            huffman(t);
+            t.remove(sc);
+            s1.setCodigo(sc.getCodigo()+"0");
+            s2.setCodigo(sc.getCodigo()+"1");
+            t.add(s1);
+            t.add(s2);
+            
+        }
+    }
 
     public Huffman()
     {

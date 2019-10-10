@@ -61,16 +61,5 @@ public class TableGenerator
         return table;
     }
 
-    public TreeSet<Simbolo> getTreeSet()
-    {
-        TreeSet<Simbolo> tree = new TreeSet<Simbolo>();
-
-        for (Map.Entry<Character, Double> entry: table.entrySet())
-        {
-            tree.add(new Simbolo("" + entry.getKey(), entry.getValue()));
-        }
-
-        return tree;
-    }
 }
 

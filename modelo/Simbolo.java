@@ -47,6 +47,6 @@ public class Simbolo
         if (this.equals(simbolo))
             return 0;
         else
-            return this.probabilidad > simbolo.getProbabilidad()? 1: -1;
+            return (int) (this.probabilidad - simbolo.getProbabilidad());
     }
 }

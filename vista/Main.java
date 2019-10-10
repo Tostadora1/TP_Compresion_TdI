@@ -28,23 +28,19 @@ public class Main
         super();
     }
 
-    public static void main(String[] args)
+    public static void main(String[] args)//en el rlc poner imbooloo y dsp la cantidad
     {
         try
         {
+            
             TableGenerator tabla = new TableGenerator("Espanol.txt");
-            TreeSet<Simbolo> arbol = tabla.getTreeSet();
-            Huffman.huffman(arbol);
-            Huffman h = new Huffman();
-
-            for (Simbolo s: arbol.descendingSet())
-            {
-                h.addSymbol(s.getNombre().charAt(0), s.getCodigo()); //TODO ESTO ES MEDIO PELIGROSO
-            }
+            Huffman h = new Huffman(tabla.getTable());
+            
+            
             String comprimido = h.encode("Espanol.txt"); //AAA OLA FER
             System.out.println(comprimido);
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("Espanol_huf.txt"), "utf-8"));
-            out.write(arbol.toString());
+            //out.write(he.toString()); //TODO METER LA TABLA
             out.write(comprimido);
             System.out.println("La codificacion se escribio en Espanol_huf.txt");
             out.close();

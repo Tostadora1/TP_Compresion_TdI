@@ -35,9 +35,9 @@ public class Main
             
             TableGenerator tabla = new TableGenerator("Espanol.txt");
             Huffman h = new Huffman(tabla.getTable());
+            String txtToString = archToString("Espanol.txt");
             
-            
-            String comprimido = h.encode("Espanol.txt"); //AAA OLA FER
+            String comprimido = h.encode(txtToString); //AAA OLA FER
             System.out.println(comprimido);
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("Espanol_huf.txt"), "utf-8"));
             //out.write(he.toString()); //TODO METER LA TABLA
@@ -56,5 +56,32 @@ public class Main
         {
         }
 
+    }
+    
+    public static String archToString(String filename)
+    {
+        String input = "";
+        StringBuilder st = null;
+        try
+        {
+            BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(filename), "utf-8"));
+            st = new StringBuilder();
+            input = in.readLine();            
+            while (input != null)
+            {   
+                st.append(input);
+                input = in.readLine();
+            }
+        }
+        catch (UnsupportedEncodingException e)
+        {
+        }
+        catch (FileNotFoundException e)
+        {
+        }
+        catch (IOException e)
+        {
+        }
+        return st.toString();
     }
 }

@@ -4,6 +4,7 @@ import com.sun.xml.internal.stream.writers.UTF8OutputStreamWriter;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
@@ -14,6 +15,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 import java.io.UnsupportedEncodingException;
+
+import java.nio.charset.StandardCharsets;
 
 import java.util.TreeSet;
 
@@ -37,21 +40,50 @@ public class Main
             String txtToString = archToString("Espanol.txt");
             String comprimido = h.encode(txtToString); //AAA OLA FER
             System.out.println(comprimido);
-            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("Espanol_huf.txt"), "utf-8"));
-            //out.write(he.toString()); //TODO METER LA TABLA
-            out.write(comprimido);
-            System.out.println("La codificacion se escribio en Espanol_huf.txt");
-            out.close();
+            
+            File file = new File("Espanol_huf.bin");
+            byte[] datos = comprimido.getBytes(StandardCharsets.UTF_8);
+            
+            for(int i = 0;i<datos.length;i++)
+                datos[i]-=48;
+            
+            byte[] datosApretados = new byte[datos.length/8+1];
+            
+            
+            
+            int i=0; int j=0;
+            byte byteactual=0;
+            
+            while(i<datos.length){
+                if((i)%8==0 && i!=0){ //esta enterito lo meto
+                    datosApretados[j]=byteactual;
+                    j++;
+                    byteactual=0;
+                }
+                else{ //siga el bailee
+                    byteactual = (byte) (byteactual << 1); //byteactual << 1 pero en croto
+                    
+                     byteactual = (byte) (byteactual | (datos[i]&0x1));
+                }
+                i++;
+            }
+            
+            //guarda con el de la punta
+            byteactual = (byte) (byteactual << 8-i-1); //se nos ocurrio mirando una representacion gráfica
+            datosApretados[j]=byteactual;
+            
+            try(FileOutputStream output = new FileOutputStream(file)){
+                output.write(datosApretados);
+                System.out.println("datos escritos correctamente");
+            }
+            catch(IOException e){
+                e.printStackTrace();
+            }
+            
         }
         catch (FileNotFoundException e)
         {
             System.out.println("no hay archivoo");
-        }
-        catch (UnsupportedEncodingException e)
-        {
-        }
-        catch (IOException e)
-        {
         }
 
     }

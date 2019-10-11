@@ -18,7 +18,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.TreeSet;
 
 import modelo.Huffman;
-import modelo.Simbolo;
 import modelo.TableGenerator;
 
 public class Main

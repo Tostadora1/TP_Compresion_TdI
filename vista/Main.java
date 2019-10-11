@@ -36,7 +36,6 @@ public class Main
             TableGenerator tabla = new TableGenerator("Espanol.txt");
             Huffman h = new Huffman(tabla.getTable());
             String txtToString = archToString("Espanol.txt");
-            
             String comprimido = h.encode(txtToString); //AAA OLA FER
             System.out.println(comprimido);
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("Espanol_huf.txt"), "utf-8"));

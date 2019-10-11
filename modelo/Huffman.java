@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +16,7 @@ import java.util.TreeSet;
 
     
 
-public class Huffman
+public class Huffman implements Serializable
 {
     // Huffman trie node
     private static class Nodo implements Comparable<Nodo> {

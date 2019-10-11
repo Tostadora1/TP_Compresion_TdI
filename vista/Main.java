@@ -12,6 +12,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 
 import java.io.UnsupportedEncodingException;
@@ -21,6 +22,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.TreeSet;
 
 import modelo.Huffman;
+import modelo.BinUtils;
 import modelo.TableGenerator;
 
 public class Main
@@ -34,6 +36,8 @@ public class Main
     {
         try
         {
+            System.out.println("eee"+BinUtils.bin2String(BinUtils.string2Bin("0000000100001")));
+            
             
             TableGenerator tabla = new TableGenerator("Espanol.txt");
             Huffman h = new Huffman(tabla.getTable());
@@ -42,38 +46,11 @@ public class Main
             System.out.println(comprimido);
             
             File file = new File("Espanol_huf.bin");
-            byte[] datos = comprimido.getBytes(StandardCharsets.UTF_8);
-            
-            for(int i = 0;i<datos.length;i++)
-                datos[i]-=48;
-            
-            byte[] datosApretados = new byte[datos.length/8+1];
-            
-            
-            
-            int i=0; int j=0;
-            byte byteactual=0;
-            
-            while(i<datos.length){
-                if((i)%8==0 && i!=0){ //esta enterito lo meto
-                    datosApretados[j]=byteactual;
-                    j++;
-                    byteactual=datos[i]; //si no perdia uno en el camino
-                }
-                else{ //siga el bailee
-                    byteactual = (byte) (byteactual << 1); //byteactual << 1 pero en croto
-                    byteactual = (byte) (byteactual | (datos[i]&0x1));
-                    
-                }
-                i++;
-            }
-            
-            //guarda con el de la punta
-            byteactual = (byte) (byteactual << 8-i%8); //se nos ocurrio mirando una representacion gráfica
-            datosApretados[j]=byteactual;
             
             try(FileOutputStream output = new FileOutputStream(file)){
-                output.write(datosApretados);
+                ObjectOutputStream objetero = new ObjectOutputStream(output);
+                objetero.writeObject(h);
+                output.write(BinUtils.string2Bin(comprimido));
                 System.out.println("datos escritos correctamente");
             }
             catch(IOException e){

@@ -58,18 +58,18 @@ public class Main
                 if((i)%8==0 && i!=0){ //esta enterito lo meto
                     datosApretados[j]=byteactual;
                     j++;
-                    byteactual=0;
+                    byteactual=datos[i]; //si no perdia uno en el camino
                 }
                 else{ //siga el bailee
                     byteactual = (byte) (byteactual << 1); //byteactual << 1 pero en croto
+                    byteactual = (byte) (byteactual | (datos[i]&0x1));
                     
-                     byteactual = (byte) (byteactual | (datos[i]&0x1));
                 }
                 i++;
             }
             
             //guarda con el de la punta
-            byteactual = (byte) (byteactual << 8-i-1); //se nos ocurrio mirando una representacion gráfica
+            byteactual = (byte) (byteactual << 8-i%8); //se nos ocurrio mirando una representacion gráfica
             datosApretados[j]=byteactual;
             
             try(FileOutputStream output = new FileOutputStream(file)){

@@ -17,26 +17,25 @@ import java.util.TreeSet;
 public class Huffman
 {
     // Huffman trie node
-    private static class Node implements Comparable<Node> {
+    private static class Nodo implements Comparable<Nodo> {
         private final char ch;
         private final double freq;
-        private final Node left, right;
+        private final Nodo izq, der;
 
-        Node(char ch, double freq, Node left, Node right) {
+        Nodo(char ch, double freq, Nodo izq, Nodo der) {
             this.ch    = ch;
             this.freq  = freq;
-            this.left  = left;
-            this.right = right;
+            this.izq  = izq;
+            this.der = der;
         }
 
-        // is the node a leaf node?
-        private boolean isLeaf() {
-            assert ((left == null) && (right == null)) || ((left != null) && (right != null));
-            return (left == null) && (right == null);
+        private boolean esHoja() {
+            
+            return (izq == null) && (der == null);
         }
 
-        // compare, based on frequency
-        public int compareTo(Node that) {
+
+        public int compareTo(Nodo that) {
             if(this.equals(that))
                 return 0;
             else 
@@ -44,41 +43,29 @@ public class Huffman
         }
     }//guarda chufi
     
-    /**
-     * buildHuffmanTree: builds a Huffman trie 
-     * @param freqs the hashmap of frequencies associated with each char.
-     * @return the root of the Huffman tree.
-     */
-    private static Node buildHuffmanTree( HashMap<Character, Double> freqs ) {
-            PriorityQueue<Node> prioQ = new PriorityQueue<Node>();
+    private static Nodo generaArbol( HashMap<Character, Double> freqs ) { //genera el arbol primero
+            PriorityQueue<Nodo> pq = new PriorityQueue<Nodo>();
             for ( char c: freqs.keySet() ) 
-                    prioQ.add( new Node( c, freqs.get(c), null, null ) );
+                    pq.add( new Nodo( c, freqs.get(c), null, null ) );
             
-            while ( prioQ.size() > 1 ) {
-                    Node left = prioQ.poll();
-                    Node right = prioQ.poll();
-                    prioQ.add( new Node( '#', left.freq + right.freq, left, right ) );
+            while ( pq.size() > 1 ) {
+                    Nodo izq = pq.poll();
+                    Nodo der = pq.poll();
+                    pq.add( new Nodo( '£', izq.freq + der.freq, izq, der ) );
             }
             
-            return prioQ.poll();
+            return pq.poll();
     }
     
     
-    /**
-     * Recursively performs a DFS to visit the Huffman trie and assign code to each
-     * leaf. 
-     * @param node
-     * @param code
-     * @param encoding
-     */
-    private static void generaCodigo(Node node, String code, HashMap<Character, String> encoding) {
-            if ( node.isLeaf() ) 
-                    encoding.put( node.ch, code );
+    private static void generaCodigo(Nodo nodo, String code, HashMap<Character, String> encoding) { //agarra las hojas y genera el hashmap
+            if ( nodo.esHoja() ) 
+                    encoding.put( nodo.ch, code );
             else {
-                    if ( node.left != null ) 
-                            generaCodigo( node.left, code+"0", encoding );
-                    if ( node.right != null )
-                            generaCodigo( node.right, code+"1", encoding );
+                    if ( nodo.izq != null ) 
+                            generaCodigo( nodo.izq, code+"0", encoding );
+                    if ( nodo.der != null )
+                            generaCodigo( nodo.der, code+"1", encoding );
             }
     }
     
@@ -92,7 +79,7 @@ public class Huffman
     public Huffman(HashMap<Character,Double> frecuencias)
     {
         HashMap<Character,String> codigo = new HashMap<Character,String>();
-        generaCodigo(buildHuffmanTree(frecuencias),"",codigo);
+        generaCodigo(generaArbol(frecuencias),"",codigo);
         this.encodeTable=codigo;
         this.decodeTable = new HashMap<String,Character>();
         for(Map.Entry <Character,String>e: encodeTable.entrySet()){
@@ -100,27 +87,6 @@ public class Huffman
         }
         
     }
-
-    public void addSymbol(Character symbol, String encoding)
-    {
-        this.encodeTable.put(symbol, encoding);
-        this.decodeTable.put(encoding, symbol);
-    }
-
-    public void load(String filename)
-        throws FileNotFoundException
-    {
-        FileInputStream f = new FileInputStream(filename);
-        Scanner sf = new Scanner(f);
-        while (sf.hasNextLine())
-        {
-            String current = sf.nextLine();
-            char schar = current.charAt(0);
-            String encoding = current.split("\\t")[1];
-            this.addSymbol(schar, encoding);
-        }
-    }
-
 
     public String encode(String input)
     {

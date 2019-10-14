@@ -19,11 +19,13 @@ import java.io.UnsupportedEncodingException;
 
 import java.nio.charset.StandardCharsets;
 
+import java.util.HashMap;
 import java.util.TreeSet;
 
 import modelo.Huffman;
 import modelo.BinUtils;
 import modelo.RLC;
+import modelo.ShannonFano;
 import modelo.TableGenerator;
 
 public class Main
@@ -33,7 +35,22 @@ public class Main
         super();
     }
 
-    public static void main(String[] args)//en el rlc poner imbooloo y dsp la cantidad
+    public static void main(String[] args) {
+        HashMap<Character,Double > test = new  HashMap<Character,Double >();
+        test.put('a', 0.4);
+       test.put('b', 0.25);
+       test.put('c', 0.25);
+       test.put('d', 0.1);
+       ShannonFano s = new ShannonFano(test);
+       System.out.println("holaa");
+        
+       
+        
+   }
+
+
+
+    /*     public static void main(String[] args)//en el rlc poner imbooloo y dsp la cantidad
     {
         try
         {
@@ -99,5 +116,5 @@ public class Main
         {
         }
         return st.toString();
-    }
+    } */
 }

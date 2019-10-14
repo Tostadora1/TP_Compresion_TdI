@@ -20,7 +20,7 @@ public class TableGenerator
         throws FileNotFoundException
     {
         super();
-        this.generator(filename);
+        this.generator("Datos/"+filename);
     }
 
     protected void generator(String filename)
@@ -34,9 +34,7 @@ public class TableGenerator
             char current = (char) control;
             while (control != -1)
             {
-                total++;
-                //System.out.println("" + current);
-                //System.out.println(total);
+                total++;                
                 if (table.containsKey(current))
                     table.put(current, table.get(current) + 1.0);
                 else

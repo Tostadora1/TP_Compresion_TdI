@@ -16,7 +16,7 @@ import java.util.TreeSet;
 
     
 
-public class Huffman implements Serializable
+public class Huffman implements Serializable,ICodigo
 {
     // Huffman trie node
     private static class Nodo implements Comparable<Nodo> {

@@ -1,6 +1,6 @@
 package modelo;
 
-public class RLC
+public class RLC implements ICodigo
 {
     
     public RLC()
@@ -8,7 +8,7 @@ public class RLC
         super();
     }
     
-    public String enconde(String entrada)
+    public String encode(String entrada)
     {
         String salida = "";
         int cant = 0; char ant = '^';
@@ -38,4 +38,5 @@ public class RLC
                 salida += entrada.charAt(i+1);  
         return salida;
     }
+   
 }

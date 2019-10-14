@@ -19,12 +19,14 @@ import java.io.UnsupportedEncodingException;
 
 import java.nio.charset.StandardCharsets;
 
+import java.util.HashMap;
 import java.util.TreeSet;
 
 import modelo.Huffman;
 import modelo.BinUtils;
 import modelo.IOFile;
 import modelo.RLC;
+import modelo.ShannonFano;
 import modelo.TableGenerator;
 
 public class Main
@@ -33,6 +35,7 @@ public class Main
     {
         super();
     }
+
 
     public static void main(String[] args) //en el rlc poner imbooloo y dsp la cantidad
     {

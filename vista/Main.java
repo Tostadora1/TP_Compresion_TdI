@@ -23,6 +23,7 @@ import java.util.TreeSet;
 
 import modelo.Huffman;
 import modelo.BinUtils;
+import modelo.RLC;
 import modelo.TableGenerator;
 
 public class Main
@@ -42,9 +43,17 @@ public class Main
             TableGenerator tabla = new TableGenerator("Espanol.txt");
             Huffman h = new Huffman(tabla.getTable());
             String txtToString = archToString("Espanol.txt");
+            
+            RLC rlc = new RLC();
+            String comprimidoRLC = rlc.enconde(txtToString);
+            System.out.println("/n/nAAAAAAAAAAAAAAAAAAAAAAAAAA/n");
+            System.out.println(comprimidoRLC);
+            String descomprimidoRLC = rlc.decode(comprimidoRLC);
+            System.out.println(descomprimidoRLC+"/n/n");
+            
+            
             String comprimido = h.encode(txtToString); //AAA OLA FER
             System.out.println(comprimido);
-            
             File file = new File("Espanol_huf.bin");
             
             try(FileOutputStream output = new FileOutputStream(file)){

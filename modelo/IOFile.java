@@ -47,11 +47,19 @@ public class IOFile
                 
                 DataInputStream inputBIN = new DataInputStream(input);
                 ArrayList<Byte> bytesArrayList = new ArrayList<Byte>();
-                while(true)
+                byte a;
+                
+                while((a= inputBIN.readByte())!=-1)
                 {
                    bytesArrayList.add( inputBIN.readByte());
                 }
-                    
+                byte[] arreglo = new byte[bytesArrayList.size()];
+                
+                int i;
+                for(i=0;i<bytesArrayList.size();i++)
+                    arreglo[i]=bytesArrayList.get(i);
+                
+                codificado = BinUtils.bin2String(arreglo);
                //codificado = BinUtils.bin2String();
                 
             }                   
@@ -80,6 +88,7 @@ public class IOFile
             }
             catch (IOException e)
             {
+                e.printStackTrace();
             }
         }
 
@@ -128,7 +137,7 @@ public class IOFile
         int total = 0;
         try
         {
-            BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(filename), "utf-8"));
+            BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream("Datos/"+filename), "utf-8"));
             int control = in.read();
             char current = (char) control;
             while (control != -1)

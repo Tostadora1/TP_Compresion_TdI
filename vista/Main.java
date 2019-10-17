@@ -36,8 +36,29 @@ public class Main
         super();
     }
 
+    public static void main(String[] args) {
+        
+        try {
+            Huffman h = new Huffman(IOFile.generator("Espanol.txt"));
+            String resultado = h.encode(IOFile.archToString("Espanol.txt"));
+            IOFile.escribe(h, resultado, "Espanol", "huf");
+            System.out.println(resultado);
+            Huffman h2 = null;
+            String traido = null;
+            IOFile.lee(h2,traido,"Espanol","huf");
+            System.out.println(traido);
+            
+        } catch (FileNotFoundException e) {
+            System.out.println("no existia");
+        } catch (Exception e) {
+            System.out.println("xd");
+            e.printStackTrace();
+        }
+    }
 
-    public static void main(String[] args) //en el rlc poner imbooloo y dsp la cantidad
+
+
+  /*  public static void main(String[] args) //en el rlc poner imbooloo y dsp la cantidad
     {
         try
         {
@@ -80,5 +101,5 @@ public class Main
         }
     }
 
-
+*/
 }
